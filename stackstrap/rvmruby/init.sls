@@ -13,7 +13,7 @@ rvm_deps:
       - gawk
       - sed
       - curl
-      - git-core
+      - git
 
 ruby_deps:
   pkg:
