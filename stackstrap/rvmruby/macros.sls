@@ -23,6 +23,14 @@ install_rvm:
       - pkg: rvm_deps
       - cmd: rvm_gpg_key
 
+install_rvm_requirements:
+  cmd:
+    - run
+    - name: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm requirements"
+    - user: {{ user }}
+    - require:
+      - cmd: install_rvm
+
 install_ruby:
   cmd:
     - run
@@ -31,6 +39,7 @@ install_ruby:
     - user: {{ user }}
     - require:
       - cmd: install_rvm
+      - cmd: install_rvm_requirements
 
 {% if ruby_gemset %}
 install_gemset:
