@@ -13,7 +13,7 @@
 install_nvm:
   cmd:
     - run
-    - name: curl -L https://raw.githubusercontent.com/creationix/nvm/{{ nvm_git_ref }}/install.sh | bash
+    - name: curl https://raw.githubusercontent.com/creationix/nvm/{{ nvm_git_ref }}/install.sh | bash
     - unless: test -d /home/{{ user }}/.nvm
     - user: {{ user }}
     - require:
