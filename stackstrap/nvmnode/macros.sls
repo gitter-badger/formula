@@ -26,7 +26,7 @@ install_node:
     - onlyif: /bin/bash -c "source ~/.nvm/nvm.sh; nvm ls {{ node_version }} | grep 'N/A'"
     - user: {{ user }}
     - require:
-      - cmd: install_nvm
+      - git: clone_nvm_repo
 
 {% if node_globals is iterable %}{% for global in node_globals %}
 node_global_{{ global }}:
