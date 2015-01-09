@@ -7,12 +7,13 @@
                  node_globals=None,
                  node_packages=None,
                  node_version='stable',
+                 nvm_git_ref='master',
                  custom=None) -%}
 
 install_nvm:
   cmd:
     - run
-    - name: curl -L https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
+    - name: curl -L https://raw.githubusercontent.com/creationix/nvm/{{ nvm_git_ref }}/install.sh | bash
     - unless: test -d /home/{{ user }}/.nvm
     - user: {{ user }}
     - require:
