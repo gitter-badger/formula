@@ -1,5 +1,3 @@
-# StackStrap Salt Formula
-
 ### Example minion config
 
 ```
