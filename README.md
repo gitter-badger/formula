@@ -15,7 +15,7 @@ file_roots:
     - /vagrant/salt/root
 ```
 
-### Example of sing Macros and States
+### Using Macros and States
 
 #### Include the state
 
