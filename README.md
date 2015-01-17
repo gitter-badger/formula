@@ -1,4 +1,4 @@
-### Example minion config
+# Standard minion config
 
 ```
 file_client: local
