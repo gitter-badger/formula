@@ -1,6 +1,4 @@
-# StackStrap Salt Formula
-
-### Example minion config
+# Standard minion config
 
 ```
 file_client: local
@@ -17,7 +15,7 @@ file_roots:
     - /vagrant/salt/root
 ```
 
-### Example of State & Macro usage
+### Using Macros and States
 
 #### Include the state
 
