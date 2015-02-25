@@ -8,6 +8,7 @@
                  node_packages=None,
                  node_version='stable',
                  nvm_git_rev='v0.22.0',
+                 install_package_json=True,
                  custom=None) -%}
 
 clone_nvm_repo:
@@ -40,6 +41,7 @@ node_global_{{ global }}:
       - cmd: install_node
 {% endfor %}{% endif %}
 
+{% if install_package_json %}
 install_package_json:
   cmd:
     - run
@@ -48,6 +50,7 @@ install_package_json:
     - user: {{ user }}
     - onlyif: test -f /home/{{ user }}/domains/{{ domain }}/package.json
     - unless: test -d /home/{{ user }}/domains/{{ domain }}/node_modules
+{% endif %}
 
 {% if node_packages is iterable %}{% for pkg in node_packages %}
 node_package_{{ pkg }}:
