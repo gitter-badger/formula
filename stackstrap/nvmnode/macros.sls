@@ -8,7 +8,7 @@
                  node_packages=None,
                  node_version='stable',
                  nvm_git_rev='v0.22.0',
-                 install_package_json=True,
+                 ignore_package_json=False,
                  custom=None) -%}
 
 clone_nvm_repo:
@@ -41,7 +41,7 @@ node_global_{{ global }}:
       - cmd: install_node
 {% endfor %}{% endif %}
 
-{% if install_package_json %}
+{% if not ignore_package_json %}
 install_package_json:
   cmd:
     - run
