@@ -6,7 +6,6 @@
                            envs=False) -%}
 /home/{{ user }}/domains/{{ domain }}/shared:
   file.directory:
-    - managed
     - owner: {{ user }}
     - group: {{ group }} 
     - makedirs: True
@@ -14,7 +13,6 @@
 
 /home/{{ user }}/domains/{{ domain }}/releases:
   file.directory:
-    - managed
     - owner: {{ user }}
     - group: {{ group }} 
     - makedirs: True
