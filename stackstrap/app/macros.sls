@@ -2,23 +2,23 @@
 # App
 #
 
-{% macro stackstrap_app(domain, user, group,
+{% macro stackstrap_app(name, user, group,
                            envs=False) -%}
-/home/{{ user }}/domains/{{ domain }}/shared:
+/home/{{ user }}/domains/{{ name }}/shared:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - makedirs: True
     - mode: 755
 
-/home/{{ user }}/domains/{{ domain }}/releases:
+/home/{{ user }}/domains/{{ name }}/releases:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - makedirs: True
     - mode: 755
 
-/home/{{ user }}/domains/{{ domain }}/tmp:
+/home/{{ user }}/domains/{{ name }}/tmp:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
