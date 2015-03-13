@@ -18,7 +18,7 @@
     - makedirs: True
     - mode: 755
 
-/home/{{ user }}/tmp:
+/home/{{ user }}/domains/{{ domain }}/tmp:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
