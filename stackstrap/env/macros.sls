@@ -53,7 +53,8 @@
 {{ user }}_vim_bundle_html5:
   archive.extracted:
     - name: /home/{{ user }}/.vim/bundle/html5
-    - source: https://github.com/othree/html5.vim/archive/master.tar.gz
+    - source: https://github.com/othree/html5.vim/archive/0.27.tar.gz
+    - source_hash: md5=cff0f00e978b7e18ce9c54df214a1533
     - archive_format: tar
     - user: {{ user }}
     - group: {{ group }}
