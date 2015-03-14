@@ -6,7 +6,8 @@
 
 {% macro mysql_user_db(name, password,
                        database=False,
-                       dump=False) -%}
+                       dump=False,
+                       dump_format="textfile") -%}
 
 {% set database_name = database if database else name %}
 
@@ -41,7 +42,11 @@ stackstrap.mysql.dump:
 import_mysql_dump:
   cmd:
     - run
-    - name: mysql --user={{ name }} --password={{ password }} {{ database_name }} < {{ dump }}
+    {% if dump_format == "zip" %}
+    - name: unzip -p {{ dump }} | mysql --user={{ name }} --password={{ password }} {{ database_name }}
+    {% else %}
+    - name: cat {{ dump }} | mysql --user={{ name }} --password={{ password }} {{ database_name }}
+    {% endif %}
     - onlyif: test -f {{ dump }}
 
 {% endif %}
