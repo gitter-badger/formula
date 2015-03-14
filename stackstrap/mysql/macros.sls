@@ -42,6 +42,7 @@ import_mysql_dump:
   cmd:
     - run
     - name: mysql --user={{ name }} --password={{ password }} {{ database_name }} < {{ dump }}
+    - onlyif: test -f {{ dump }}
 
 {% endif %}
 
