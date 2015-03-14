@@ -7,6 +7,7 @@
 {{ user }}_download_dot_files:
   git.latest:
     - name: https://github.com/stackstrap/dot-files.git
+    - user: {{ user }}
     - rev: master
     - target: /home/{{ user }}/dot-files
     - submodules: True
