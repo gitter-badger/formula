@@ -8,21 +8,24 @@
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
-    - makedirs: True
+    - mode: 755
+
+/home/{{ user }}/domains/{{ name }}/shared/assets:
+  file.directory:
+    - owner: {{ user }}
+    - group: {{ group }} 
     - mode: 755
 
 /home/{{ user }}/domains/{{ name }}/releases:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
-    - makedirs: True
     - mode: 755
 
 /home/{{ user }}/domains/{{ name }}/tmp:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
-    - makedirs: True
     - mode: 755
 {%- endmacro %}
 
