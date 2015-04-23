@@ -41,26 +41,26 @@
           custom=custom) }}
 {% endif %}
 
-{{ user }}_{{ domain }}_{{ listen }}_domains_dir:
+{{ user }}_{{ domain }}_{{ listen }}_apps_dir:
   file:
     - directory
-    - name: /home/{{ user }}/domains/{{ domain }}
+    - name: /home/{{ user }}/apps/{{ domain }}
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
     - require:
       - user: {{ user }}
-      - file: /home/{{ user }}/domains
+      - file: /home/{{ user }}/apps
 
 {% if create_root %}
-/home/{{ user }}/domains/{{ domain }}/{{ root }}:
+/home/{{ user }}/apps/{{ domain }}/{{ root }}:
   file:
     - directory
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
     - require:
-      - file: /home/{{ user }}/domains/{{ domain }}
+      - file: /home/{{ user }}/apps/{{ domain }}
 {% endif %}
 
 # if we're being run in a VirtualBox instance we turn sendfile off
@@ -75,7 +75,7 @@
   file:
     - managed
     - require:
-      - file: /home/{{ user }}/domains/{{ domain }}
+      - file: /home/{{ user }}/apps/{{ domain }}
     - user: root
     - group: root
     - mode: 444

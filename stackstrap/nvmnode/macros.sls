@@ -46,10 +46,10 @@ install_package_json:
   cmd:
     - run
     - name: "source ~/.nvm/nvm.sh; npm install"
-    - cwd: /home/{{ user }}/domains/{{ domain }}
+    - cwd: /home/{{ user }}/apps/{{ domain }}
     - user: {{ user }}
-    - onlyif: test -f /home/{{ user }}/domains/{{ domain }}/package.json
-    - unless: test -d /home/{{ user }}/domains/{{ domain }}/node_modules
+    - onlyif: test -f /home/{{ user }}/apps/{{ domain }}/package.json
+    - unless: test -d /home/{{ user }}/apps/{{ domain }}/node_modules
 {% endif %}
 
 {% if node_packages is iterable %}{% for pkg in node_packages %}
@@ -59,7 +59,7 @@ node_package_{{ pkg }}:
     - names:
       - /bin/bash -c "source ~/.nvm/nvm.sh; npm install {{ pkg }}"
     - unless: /bin/bash -c "source ~/.nvm/nvm.sh; npm list {{ pkg }}"
-    - cwd: /home/{{ user }}/domains/{{ domain }}
+    - cwd: /home/{{ user }}/apps/{{ domain }}
     - user: {{ user }}
     - require:
       - cmd: install_node

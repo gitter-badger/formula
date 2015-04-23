@@ -4,25 +4,25 @@
 
 {% macro stackstrap_app(name, user, group,
                            envs=False) -%}
-/home/{{ user }}/domains/{{ name }}/shared:
+/home/{{ user }}/apps/{{ name }}/shared:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-/home/{{ user }}/domains/{{ name }}/shared/assets:
+/home/{{ user }}/apps/{{ name }}/shared/assets:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-/home/{{ user }}/domains/{{ name }}/releases:
+/home/{{ user }}/apps/{{ name }}/releases:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-/home/{{ user }}/domains/{{ name }}/tmp:
+/home/{{ user }}/apps/{{ name }}/tmp:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 

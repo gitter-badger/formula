@@ -70,9 +70,9 @@ bundle_install_gems:
   cmd:
     - run
     - name: "source ~/.rvm/scripts/rvm; bundle install"
-    - cwd: /home/{{ user }}/domains/{{ domain }}
+    - cwd: /home/{{ user }}/apps/{{ domain }}
     - user: {{ user }}
-    - onlyif: test -f /home/{{ user }}/domains/{{ domain }}/Gemfile.lock
+    - onlyif: test -f /home/{{ user }}/apps/{{ domain }}/Gemfile.lock
 {% endif %}
 
 {% endmacro %}
