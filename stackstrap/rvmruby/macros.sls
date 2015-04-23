@@ -10,7 +10,7 @@
 rvm_gpg_key:
   cmd:
     - run
-    - name: gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+    - name: command curl -sSL https://rvm.io/mpapis.asc | gpg --import - 
     - user: {{ user }}
 
 install_rvm:
