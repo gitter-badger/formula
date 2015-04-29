@@ -10,6 +10,13 @@ env-packages:
       - tree
       - ack-grep
       - bc
+      - python-dev
+      - python-pip
+      - python-git
+      - unzip
+
+hjson:
+  pip.installed
 
 /usr/local/bin/ack:
   file.symlink:
