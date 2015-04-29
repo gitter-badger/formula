@@ -5,6 +5,8 @@
 #
 
 {% macro nginxsite(domain, user, group,
+                   short_name=False,
+                   app_dir='apps',
                    auth=False,
                    cors=False,
                    template='standard-server.conf',
@@ -19,6 +21,8 @@
                    ssl=False,
                    ssl_alias=False,
                    custom=None) -%}
+
+{% set app_name = short_name or domain %}
 
 # if ssl_alias is true then we want to setup an identical site with ssl enabled
 # as well, you still need to supply ssl_certificate and ssl_certificate_key to
@@ -41,26 +45,26 @@
           custom=custom) }}
 {% endif %}
 
-{{ user }}_{{ domain }}_{{ listen }}_apps_dir:
+{{ user }}_{{ app_name }}_{{ listen }}_apps_dir:
   file:
     - directory
-    - name: /home/{{ user }}/apps/{{ domain }}
+    - name: /home/{{ user }}/{{ app_dir }}
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
     - require:
       - user: {{ user }}
-      - file: /home/{{ user }}/apps
+      - file: /home/{{ user }}/{{ app_dir }}
 
 {% if create_root %}
-/home/{{ user }}/apps/{{ domain }}/{{ root }}:
+/home/{{ user }}/{{ app_dir }}/{{ app_name }}/{{ root }}:
   file:
     - directory
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
     - require:
-      - file: /home/{{ user }}/apps/{{ domain }}
+      - file: /home/{{ user }}/{{ app_dir }}/{{ app_name }}
 {% endif %}
 
 # if we're being run in a VirtualBox instance we turn sendfile off
@@ -75,7 +79,7 @@
   file:
     - managed
     - require:
-      - file: /home/{{ user }}/apps/{{ domain }}
+      - file: /home/{{ user }}/{{ app_dir }}/{{ app_name }}
     - user: root
     - group: root
     - mode: 444
