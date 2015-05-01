@@ -48,7 +48,7 @@
 {{ user }}_{{ app_name }}_{{ listen }}_apps_dir:
   file:
     - directory
-    - name: /home/{{ user }}/{{ app_dir }}
+    - name: /home/{{ user }}/{{ app_dir }}/{{ app_name }}
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
