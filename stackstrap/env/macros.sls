@@ -2,7 +2,7 @@
 # Environment
 #
 
-{% macro stackstrap_env(name, user, group) -%}
+{% macro stackstrap_env(short_name, user, group) -%}
 
 {{ user }}_download_dot_files:
   git.latest:
