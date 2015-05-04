@@ -31,6 +31,7 @@
 {{ nginxsite(domain, user, group,
           auth=False,
           cors=False,
+          app_dir=app_dir,
           template=template,
           defaults=defaults,
           listen='443',
