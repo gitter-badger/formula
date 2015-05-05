@@ -89,6 +89,7 @@
       - service: nginx
     - template: jinja
     - defaults:
+        app_name: '{{ app_name }}'
         auth: {{ auth }}
         cors: '{{ cors }}'
         server_name: '{{ server_name or domain }}'
