@@ -22,7 +22,7 @@
                    ssl_alias=False,
                    custom=None) -%}
 
-{% set app_name = short_name or domain %}
+{% set app_name = short_name if short_name else domain %}
 
 # if ssl_alias is true then we want to setup an identical site with ssl enabled
 # as well, you still need to supply ssl_certificate and ssl_certificate_key to
