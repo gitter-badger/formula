@@ -16,6 +16,12 @@
     - group: {{ group }} 
     - mode: 755
 
+/home/{{ user }}/apps/{{ name }}/shared/vendor:
+  file.directory:
+    - owner: {{ user }}
+    - group: {{ group }} 
+    - mode: 755
+
 /home/{{ user }}/apps/{{ name }}/releases:
   file.directory:
     - owner: {{ user }}
