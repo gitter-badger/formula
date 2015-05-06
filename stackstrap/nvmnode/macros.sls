@@ -2,7 +2,7 @@
 # Node.js & NVM macros
 #
 
-{% macro nvmnode(domain, user, group,
+{% macro nvmnode(domain, user='vagrant', group='vagrant',
                  defaults={},
                  node_globals=None,
                  node_packages=None,
