@@ -11,7 +11,7 @@
                  ignore_package_json=False,
                  custom=None) -%}
 
-clone_nvm_repo:
+{{ user }}_clone_nvm_repo:
   git.latest:
     - name: https://github.com/creationix/nvm.git
     - rev: {{ nvm_git_rev }}
@@ -20,17 +20,17 @@ clone_nvm_repo:
     - require:
       - pkg: nvm_deps
 
-install_node:
+{{ user }}_install_node:
   cmd:
     - run
     - name: /bin/bash -c "source ~/.nvm/nvm.sh; nvm install {{ node_version }} && nvm alias default {{ node_version }} && nvm use {{ node_version }}"
     - onlyif: /bin/bash -c "source ~/.nvm/nvm.sh; nvm ls {{ node_version }} | grep 'N/A'"
     - user: {{ user }}
     - require:
-      - git: clone_nvm_repo
+      - git: {{ user }}_clone_nvm_repo
 
 {% if node_globals is iterable %}{% for global in node_globals %}
-node_global_{{ global }}:
+{{ user }}_node_global_{{ global }}:
   cmd:
     - run
     - names:
@@ -38,11 +38,11 @@ node_global_{{ global }}:
     - unless: /bin/bash -c "source ~/.nvm/nvm.sh; npm -g ls {{ global }} | grep {{ global }}"
     - user: {{ user }}
     - require:
-      - cmd: install_node
+      - cmd: {{ user }}_install_node
 {% endfor %}{% endif %}
 
 {% if not ignore_package_json %}
-install_package_json:
+{{ user }}_install_package_json:
   cmd:
     - run
     - name: "source ~/.nvm/nvm.sh; npm install"
@@ -53,7 +53,7 @@ install_package_json:
 {% endif %}
 
 {% if node_packages is iterable %}{% for pkg in node_packages %}
-node_package_{{ pkg }}:
+{{ user }}_node_package_{{ pkg }}:
   cmd:
     - run
     - names:
@@ -62,7 +62,7 @@ node_package_{{ pkg }}:
     - cwd: /home/{{ user }}/domains/{{ domain }}
     - user: {{ user }}
     - require:
-      - cmd: install_node
+      - cmd: {{ user }}_install_node
 {% endfor %}{% endif %}
 
 {% endmacro %}
