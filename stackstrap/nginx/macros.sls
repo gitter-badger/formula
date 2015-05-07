@@ -101,7 +101,7 @@
         {{ n }}: "{{ defaults[n] }}"{% endfor %}
 
 {% if custom %}
-/etc/nginx/sites-available/{{ enabled_name or app_name }}.{{ listen }}-custom:
+/etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}-custom:
   file:
     - managed
     - user: root
@@ -110,7 +110,7 @@
     - source: {{ custom }}
 {% endif %}
 
-/etc/nginx/sites-enabled/{{ enabled_name or app_name }}.{{ listen }}.conf:
+/etc/nginx/sites-enabled/{{ user }}-{{ app_name }}.{{ listen }}.conf:
   file:
 {% if enabled %}
     - symlink
