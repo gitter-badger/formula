@@ -116,7 +116,7 @@
     - symlink
     - target: /etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}.conf
     - require:
-      - file: /etc/nginx/sites-available/{{ user }}-{{ app_name }}.conf
+      - file: /etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}.conf
 {% else %}
     - absent
 {% endif %}
