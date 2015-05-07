@@ -7,7 +7,7 @@
                  nvm_version='v0.25.1',
                  node_globals=None,
                  node_packages=None,
-                 node_version='0.12.2',
+                 node_version='v0.12.2',
                  ignore_package_json=False,
                  custom=None) -%}
 
