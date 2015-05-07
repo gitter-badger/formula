@@ -15,6 +15,7 @@
   file.managed:
     - name: /tmp/{{ user }}_nvm_install.sh
     - source: https://raw.githubusercontent.com/creationix/nvm/{{ nvm_version }}/install.sh
+    - source_hash: md5=2158d9caa6d9467a6f461984e67cd1b4
     - mode: 755
     - user: {{ user }}
     - group: {{ group }}
