@@ -4,17 +4,17 @@
 
 {% macro nvmnode(domain, user='vagrant', group='vagrant',
                  defaults={},
+                 nvm_version='v0.25.1',
                  node_globals=None,
                  node_packages=None,
                  node_version='stable',
-                 nvm_git_rev='v0.25.1',
                  ignore_package_json=False,
                  custom=None) -%}
 
 {{ user }}_nvm_install_script:
   file.managed:
     - name: /tmp/{{ user }}_nvm_install.sh
-    - source: https://raw.githubusercontent.com/creationix/nvm/{{ nvm_git_rev }}/install.sh
+    - source: https://raw.githubusercontent.com/creationix/nvm/{{ nvm_version }}/install.sh
     - mode: 755
     - user: {{ user }}
     - group: {{ group }}
