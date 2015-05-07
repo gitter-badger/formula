@@ -4,8 +4,7 @@
 # Copyright 2014 Evan Borgstrom
 #
 
-{% macro nginxsite(domain, user, group,
-                   short_name=False,
+{% macro nginxsite(app_name, user, group,
                    app_dir='apps',
                    auth=False,
                    cors=False,
@@ -22,21 +21,19 @@
                    ssl_alias=False,
                    custom=None) -%}
 
-{% set app_name = short_name if short_name else domain %}
-
 # if ssl_alias is true then we want to setup an identical site with ssl enabled
 # as well, you still need to supply ssl_certificate and ssl_certificate_key to
 # the defaults
 {% if ssl_alias %}
-{{ nginxsite(domain, user, group,
-          auth=False,
-          cors=False,
+{{ nginxsite(app_name, user, group,
+          auth=auth,
+          cors=cors,
           app_dir=app_dir,
           template=template,
           defaults=defaults,
           listen='443',
           server_name=server_name,
-          static=False,
+          static=static,
           root=root,
           create_root=False,
           enabled=enabled,
@@ -76,7 +73,7 @@
 {% if grains.get('virtual') == 'VirtualBox' %}{% do defaults.update({'sendfile_off': True}) %}{% endif %}
 {% endif %}
 
-/etc/nginx/sites-available/{{ domain }}.{{ listen }}.conf:
+/etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}.conf:
   file:
     - managed
     - require:
@@ -92,19 +89,19 @@
         app_name: '{{ app_name }}'
         auth: {{ auth }}
         cors: '{{ cors }}'
-        server_name: '{{ server_name or domain }}'
+        server_name: '{{ server_name or app_name }}'
         listen: "{{ listen }}"
-        domain: {{ domain }}
+        domain: {{ app_name }}
         owner: {{ user }}
         group: {{ group }}
         root: {{ root }}
         static: {{ static }}
         ssl: {{ ssl }}{% if custom %}
-        custom: "sites-available/{{ domain }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
+        custom: "sites-available/{{ user }}-{{ app_name }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
         {{ n }}: "{{ defaults[n] }}"{% endfor %}
 
 {% if custom %}
-/etc/nginx/sites-available/{{ enabled_name or domain }}.{{ listen }}-custom:
+/etc/nginx/sites-available/{{ enabled_name or app_name }}.{{ listen }}-custom:
   file:
     - managed
     - user: root
@@ -113,13 +110,13 @@
     - source: {{ custom }}
 {% endif %}
 
-/etc/nginx/sites-enabled/{{ enabled_name or domain }}.{{ listen }}.conf:
+/etc/nginx/sites-enabled/{{ enabled_name or app_name }}.{{ listen }}.conf:
   file:
 {% if enabled %}
     - symlink
-    - target: /etc/nginx/sites-available/{{ domain }}.{{ listen }}.conf
+    - target: /etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}.conf
     - require:
-      - file: /etc/nginx/sites-available/{{ domain }}.{{ listen }}.conf
+      - file: /etc/nginx/sites-available/{{ user }}-{{ app_name }}.conf
 {% else %}
     - absent
 {% endif %}
