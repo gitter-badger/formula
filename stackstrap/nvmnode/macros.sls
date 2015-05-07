@@ -7,18 +7,27 @@
                  node_globals=None,
                  node_packages=None,
                  node_version='stable',
-                 nvm_git_rev='v0.24.1',
+                 nvm_git_rev='v0.25.1',
                  ignore_package_json=False,
                  custom=None) -%}
 
-{{ user }}_clone_nvm_repo:
-  git.latest:
-    - name: https://github.com/creationix/nvm.git
-    - rev: {{ nvm_git_rev }}
-    - target: /home/{{ user }}/.nvm
+{{ user }}_nvm_install_script:
+  file.managed:
+    - name: /tmp/{{ user }}_nvm_install.sh
+    - source: https://raw.githubusercontent.com/creationix/nvm/{{ nvm_git_rev }}/install.sh
+    - mode: 755
     - user: {{ user }}
+    - group: {{ group }}
     - require:
       - pkg: nvm_deps
+
+{{ user }}_install_nvm:
+  cmd.run:
+    - name: source ~/.profile; sh /tmp/{{ user }}_nvm_install.sh
+    - user: {{ user }}
+    - unless: test -f ~/.nvm/nvm.sh
+    - require:
+      - file: {{ user }}_nvm_install_script
 
 {{ user }}_install_node:
   cmd:
@@ -27,7 +36,7 @@
     - onlyif: /bin/bash -c "source ~/.nvm/nvm.sh; nvm ls {{ node_version }} | grep 'N/A'"
     - user: {{ user }}
     - require:
-      - git: {{ user }}_clone_nvm_repo
+      - cmd: {{ user }}_install_nvm
 
 {% if node_globals is iterable %}{% for global in node_globals %}
 {{ user }}_node_global_{{ global }}:
