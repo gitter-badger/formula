@@ -13,6 +13,8 @@
 
 {% if skeleton %}
 
+{% set name = user -%}
+
 {{ name }}:
   group:
     - present
