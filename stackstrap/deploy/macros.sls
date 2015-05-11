@@ -3,37 +3,70 @@
 #
 
 {% macro deploy(project_name, user, group,
-                        project_path='/project') -%}
+                repo=False,
+                identity=None) -%}
 
-{{ project_path }}/shared:
+{% set deploy_path = '/home/'+user+'/deployments' -%}
+
+{{ deploy_path }}:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ group }}
+    - mode: 755
+
+{{ deploy_path }}/shared:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-{{ project_path }}/shared/assets:
+{{ deploy_path }}/shared/assets:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-{{ project_path }}/shared/vendor:
+{{ deploy_path }}/shared/static:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-{{ project_path }}/releases:
+{{ deploy_path }}/shared/storage:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-{{ project_path }}/tmp:
+{{ deploy_path }}/shared/vendor:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
+
+{{ deploy_path }}/releases:
+  file.directory:
+    - owner: {{ user }}
+    - group: {{ group }} 
+    - mode: 755
+
+{{ deploy_path }}/tmp:
+  file.directory:
+    - owner: {{ user }}
+    - group: {{ group }} 
+    - mode: 755
+
+{% if repo %}
+{{ project_name }}_repo:
+  git.latest:
+    - name: {{ repo }}
+    {% if identity %}
+    - identity: {{ identity }}
+    {% endif %}
+    - user: {{ user }}
+    - target: {{ project_path }}/source
+{% endif %}
 
 {%- endmacro %}
 
