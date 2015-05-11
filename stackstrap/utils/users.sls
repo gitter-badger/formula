@@ -31,8 +31,14 @@
 {{ name }}-dirs:
   file:
     - directory
-    - user: {{ name }}
-    - group: {{ name }}
+{% if uid %}
+    - uid: {{ uid }}
+{% endif %}
+{% if gid %}
+    - gid: {{ gid }}
+{% else %}
+    - gid: {{ name }}
+{% endif %}
     - mode: 755
     - require:
       - user: {{ name }}

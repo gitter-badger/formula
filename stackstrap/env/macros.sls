@@ -2,6 +2,8 @@
 # Environment
 #
 
+{% from "stackstrap/utils/users.sls" import skeleton %}
+
 {% macro env(project_name, user, group,
              project_path='/project',
              skeleton=True,
