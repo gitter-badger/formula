@@ -11,12 +11,20 @@
 {{ name }}:
   group:
     - present
+{% if gid %}
     - gid: {{ gid }}
+{% endif %}
 
   user:
     - present
+{% if uid %}
     - uid: {{ uid }}
+{% endif %}
+{% if gid %}
     - gid: {{ gid }}
+{% else %}
+    - gid: {{ name }}
+{% endif %}
     - shell: /bin/bash
     - home: /home/{{ name }}{% if password %}
     - password: '{{ password }}'{% endif %}
