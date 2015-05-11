@@ -50,6 +50,8 @@
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
+    - require:
+      - file: {{ project_path }}
 {% endif %}
 
 # if we're being run in a VirtualBox instance we turn sendfile off
@@ -63,6 +65,8 @@
 /etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}.conf:
   file:
     - managed
+    - require:
+      - file: {{ project_path }}
     - user: root
     - group: root
     - mode: 444

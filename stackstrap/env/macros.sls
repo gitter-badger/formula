@@ -56,6 +56,14 @@
 
 {% endif %}
 
+{{ project_path }}:
+  file.directory:
+    - user: {{ name }}
+    - group: {{ name }}
+    - mode: 755
+    - require:
+      - user: {{ name }}
+
 {{ user }}_download_dot_files:
   git.latest:
     - name: https://github.com/stackstrap/dot-files.git
