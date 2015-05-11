@@ -11,20 +11,12 @@
 {{ name }}:
   group:
     - present
-{% if gid %}
     - gid: {{ gid }}
-{% endif %}
 
   user:
     - present
-{% if uid %}
     - uid: {{ uid }}
-{% endif %}
-{% if gid %}
     - gid: {{ gid }}
-{% else %}
-    - gid: {{ name }}
-{% endif %}
     - shell: /bin/bash
     - home: /home/{{ name }}{% if password %}
     - password: '{{ password }}'{% endif %}
@@ -46,6 +38,7 @@
       - user: {{ name }}
     - names:
       - /home/{{ name }}
+      - /home/{{ name }}/apps
 {% endmacro %}
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
