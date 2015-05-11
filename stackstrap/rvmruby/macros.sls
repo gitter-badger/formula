@@ -1,4 +1,5 @@
-{% macro rvmruby(domain, user, group,
+{% macro rvmruby(project_name, user, group,
+                 project_path='/project',
                  defaults={},
                  ruby_version='2.1.4',
                  rvm_version='latest',
@@ -70,9 +71,9 @@ bundle_install_gems:
   cmd:
     - run
     - name: "source ~/.rvm/scripts/rvm; bundle install"
-    - cwd: /home/{{ user }}/apps/{{ domain }}
+    - cwd: {{ project_path }}
     - user: {{ user }}
-    - onlyif: test -f /home/{{ user }}/apps/{{ domain }}/Gemfile.lock
+    - onlyif: test -f {{ project_path }}/Gemfile.lock
 {% endif %}
 
 {% endmacro %}

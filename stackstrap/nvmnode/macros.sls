@@ -2,7 +2,8 @@
 # Node.js & NVM macros
 #
 
-{% macro nvmnode(domain, user='vagrant', group='vagrant',
+{% macro nvmnode(project_name, user='vagrant', group='vagrant',
+                 project_path='/project',
                  defaults={},
                  nvm_version='v0.25.1',
                  node_globals=None,
@@ -56,10 +57,10 @@
   cmd:
     - run
     - name: "source ~/.nvm/nvm.sh; npm install"
-    - cwd: /home/{{ user }}/apps/{{ domain }}
+    - cwd: {{ project_path }}
     - user: {{ user }}
-    - onlyif: test -f /home/{{ user }}/apps/{{ domain }}/package.json
-    - unless: test -d /home/{{ user }}/apps/{{ domain }}/node_modules
+    - onlyif: test -f {{ project_path }}/package.json
+    - unless: test -d {{ project_path }}/node_modules
 {% endif %}
 
 {% if node_packages is iterable %}{% for pkg in node_packages %}
@@ -69,7 +70,7 @@
     - names:
       - /bin/bash -c "source ~/.nvm/nvm.sh; npm install {{ pkg }}"
     - unless: /bin/bash -c "source ~/.nvm/nvm.sh; npm list {{ pkg }}"
-    - cwd: /home/{{ user }}/apps/{{ domain }}
+    - cwd: {{ project_path }}
     - user: {{ user }}
     - require:
       - cmd: {{ user }}_install_node

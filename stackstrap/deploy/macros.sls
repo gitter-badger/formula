@@ -1,38 +1,40 @@
 #
-# App
+# Deployments
 #
 
-{% macro stackstrap_app(name, user, group,
-                           envs=False) -%}
-/home/{{ user }}/apps/{{ name }}/shared:
+{% macro deploy(project_name, user, group,
+                        project_path='/project') -%}
+
+{{ project_path }}/shared:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-/home/{{ user }}/apps/{{ name }}/shared/assets:
+{{ project_path }}/shared/assets:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-/home/{{ user }}/apps/{{ name }}/shared/vendor:
+{{ project_path }}/shared/vendor:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-/home/{{ user }}/apps/{{ name }}/releases:
+{{ project_path }}/releases:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
 
-/home/{{ user }}/apps/{{ name }}/tmp:
+{{ project_path }}/tmp:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
+
 {%- endmacro %}
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :

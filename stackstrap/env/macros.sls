@@ -2,7 +2,8 @@
 # Environment
 #
 
-{% macro stackstrap_env(app_name, user, group) -%}
+{% macro env(project_name, user, group,
+                        project_path='/project') -%}
 
 {{ user }}_download_dot_files:
   git.latest:

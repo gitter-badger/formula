@@ -4,8 +4,8 @@
 # Copyright 2014 Evan Borgstrom
 #
 
-{% macro nginxsite(app_name, user, group,
-                   app_dir='apps',
+{% macro nginxsite(project_name, user, group,
+                   project_path='/project',
                    auth=False,
                    cors=False,
                    template='standard-server.conf',
@@ -14,7 +14,7 @@
                    server_name=None,
                    static=False,
                    root='public',
-                   create_root=True,
+                   create_root=False,
                    enabled=True,
                    enabled_name=None,
                    ssl=False,
@@ -25,10 +25,10 @@
 # as well, you still need to supply ssl_certificate and ssl_certificate_key to
 # the defaults
 {% if ssl_alias %}
-{{ nginxsite(app_name, user, group,
+{{ nginxsite(project_name, user, group,
           auth=auth,
           cors=cors,
-          app_dir=app_dir,
+          project_path=project_path,
           template=template,
           defaults=defaults,
           listen='443',
@@ -43,26 +43,15 @@
           custom=custom) }}
 {% endif %}
 
-{{ user }}_{{ app_name }}_{{ listen }}_apps_dir:
-  file:
-    - directory
-    - name: /home/{{ user }}/{{ app_dir }}/{{ app_name }}
-    - user: {{ user }}
-    - group: {{ group or user }}
-    - mode: 755
-    - require:
-      - user: {{ user }}
-      - file: /home/{{ user }}/{{ app_dir }}
-
 {% if create_root %}
-/home/{{ user }}/{{ app_dir }}/{{ app_name }}/{{ root }}:
+{{ project_path }}/{{ root }}:
   file:
     - directory
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
     - require:
-      - file: /home/{{ user }}/{{ app_dir }}/{{ app_name }}
+      - file: {{ project_path }}
 {% endif %}
 
 # if we're being run in a VirtualBox instance we turn sendfile off
@@ -73,11 +62,11 @@
 {% if grains.get('virtual') == 'VirtualBox' %}{% do defaults.update({'sendfile_off': True}) %}{% endif %}
 {% endif %}
 
-/etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}.conf:
+/etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}.conf:
   file:
     - managed
     - require:
-      - file: /home/{{ user }}/{{ app_dir }}/{{ app_name }}
+      - file: {{ project_path }}
     - user: root
     - group: root
     - mode: 444
@@ -86,22 +75,22 @@
       - service: nginx
     - template: jinja
     - defaults:
-        app_name: '{{ app_name }}'
+        project_name: '{{ project_name }}'
+        project_path: '{{ project_path }}'
         auth: {{ auth }}
         cors: '{{ cors }}'
-        server_name: '{{ server_name or app_name }}'
+        server_name: '{{ server_name or project_name }}'
         listen: "{{ listen }}"
-        domain: {{ app_name }}
         owner: {{ user }}
         group: {{ group }}
         root: {{ root }}
         static: {{ static }}
         ssl: {{ ssl }}{% if custom %}
-        custom: "sites-available/{{ user }}-{{ app_name }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
+        custom: "sites-available/{{ user }}-{{ project_name }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
         {{ n }}: "{{ defaults[n] }}"{% endfor %}
 
 {% if custom %}
-/etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}-custom:
+/etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}-custom:
   file:
     - managed
     - user: root
@@ -110,13 +99,13 @@
     - source: {{ custom }}
 {% endif %}
 
-/etc/nginx/sites-enabled/{{ user }}-{{ app_name }}.{{ listen }}.conf:
+/etc/nginx/sites-enabled/{{ user }}-{{ project_name }}.{{ listen }}.conf:
   file:
 {% if enabled %}
     - symlink
-    - target: /etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}.conf
+    - target: /etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}.conf
     - require:
-      - file: /etc/nginx/sites-available/{{ user }}-{{ app_name }}.{{ listen }}.conf
+      - file: /etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}.conf
 {% else %}
     - absent
 {% endif %}
