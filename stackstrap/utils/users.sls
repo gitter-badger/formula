@@ -11,12 +11,20 @@
 {{ name }}:
   group:
     - present
+{% if gid %}
     - gid: {{ gid }}
+{% endif %}
 
   user:
     - present
+{% if uid %}
     - uid: {{ uid }}
+{% endif %}
+{% if gid %}
     - gid: {{ gid }}
+{% else %}
+    - gid: {{ name }}
+{% endif %}
     - shell: /bin/bash
     - home: /home/{{ name }}{% if password %}
     - password: '{{ password }}'{% endif %}
@@ -31,14 +39,8 @@
 {{ name }}-dirs:
   file:
     - directory
-{% if uid %}
-    - uid: {{ uid }}
-{% endif %}
-{% if gid %}
-    - gid: {{ gid }}
-{% else %}
-    - gid: {{ name }}
-{% endif %}
+    - user: {{ name }}
+    - group: {{ name }}
     - mode: 755
     - require:
       - user: {{ name }}
