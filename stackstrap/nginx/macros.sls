@@ -26,7 +26,7 @@
 # as well, you still need to supply ssl_certificate and ssl_certificate_key to
 # the defaults
 {% if ssl_alias %}
-{{ nginxsite((user, group,
+{{ nginxsite(user, group,
           name=name,
           auth=auth,
           cors=cors,
