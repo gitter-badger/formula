@@ -1,4 +1,4 @@
-{% macro rvmruby(project_name, user, group,
+{% macro rvmruby(user, group,
                  project_path='/project',
                  defaults={},
                  ruby_version='2.1.4',

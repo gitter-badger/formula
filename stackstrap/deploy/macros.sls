@@ -2,7 +2,8 @@
 # Deployments
 #
 
-{% macro deploy(project_name, user, group,
+{% macro deploy(user, group,
+                project_path='/projects',
                 repo=False,
                 identity=None) -%}
 
@@ -58,7 +59,7 @@
     - mode: 755
 
 {% if repo %}
-{{ project_name }}_repo:
+{{ user }}_project_repo:
   git.latest:
     - name: {{ repo }}
     {% if identity %}

@@ -2,7 +2,7 @@
 # Node.js & NVM macros
 #
 
-{% macro nvmnode(project_name, user='vagrant', group='vagrant',
+{% macro nvmnode(user, group,
                  project_path='/project',
                  defaults={},
                  nvm_version='v0.25.1',

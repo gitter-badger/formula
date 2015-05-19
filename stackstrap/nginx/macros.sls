@@ -4,7 +4,8 @@
 # Copyright 2014 Evan Borgstrom
 #
 
-{% macro nginxsite(project_name, user, group,
+{% macro nginxsite(user, group,
+                   project_name=False,
                    project_path='/project',
                    auth=False,
                    cors=False,
@@ -25,7 +26,8 @@
 # as well, you still need to supply ssl_certificate and ssl_certificate_key to
 # the defaults
 {% if ssl_alias %}
-{{ nginxsite(project_name, user, group,
+{{ nginxsite((user, group,
+          project_name=project_name,
           auth=auth,
           cors=cors,
           project_path=project_path,
@@ -41,6 +43,12 @@
           ssl=True,
           ssl_alias=False,
           custom=custom) }}
+{% endif %}
+
+{% if project_name %}
+{% nginx_name = user + '-' + project_name -%}
+{% else %}
+{% nginx_name = user -%}
 {% endif %}
 
 {% if create_root %}
@@ -62,7 +70,8 @@
 {% if grains.get('virtual') == 'VirtualBox' %}{% do defaults.update({'sendfile_off': True}) %}{% endif %}
 {% endif %}
 
-/etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}.conf:
+/etc/nginx/sites-available/{{ nginx_name }}.{{ listen }}.conf:
+{% endif %}
   file:
     - managed
     - require:
@@ -75,22 +84,22 @@
       - service: nginx
     - template: jinja
     - defaults:
-        project_name: '{{ project_name }}'
+        nginx_name: '{{ nginx_name }}'
         project_path: '{{ project_path }}'
         auth: {{ auth }}
         cors: '{{ cors }}'
-        server_name: '{{ server_name or project_name }}'
+        server_name: "{{ server_name or 'localhost' }}"
         listen: "{{ listen }}"
         owner: {{ user }}
         group: {{ group }}
         root: {{ root }}
         static: {{ static }}
         ssl: {{ ssl }}{% if custom %}
-        custom: "sites-available/{{ user }}-{{ project_name }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
+        custom: "sites-available/{{ nginx_name }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
         {{ n }}: "{{ defaults[n] }}"{% endfor %}
 
 {% if custom %}
-/etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}-custom:
+/etc/nginx/sites-available/{{ nginx_name }}.{{ listen }}-custom:
   file:
     - managed
     - user: root
@@ -99,13 +108,13 @@
     - source: {{ custom }}
 {% endif %}
 
-/etc/nginx/sites-enabled/{{ user }}-{{ project_name }}.{{ listen }}.conf:
+/etc/nginx/sites-enabled/{{ nginx_name }}.{{ listen }}.conf:
   file:
 {% if enabled %}
     - symlink
-    - target: /etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}.conf
+    - target: /etc/nginx/sites-available/{{ nginx_name }}.{{ listen }}.conf
     - require:
-      - file: /etc/nginx/sites-available/{{ user }}-{{ project_name }}.{{ listen }}.conf
+      - file: /etc/nginx/sites-available/{{ nginx_name }}.{{ listen }}.conf
 {% else %}
     - absent
 {% endif %}
