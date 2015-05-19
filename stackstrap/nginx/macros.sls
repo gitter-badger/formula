@@ -46,9 +46,9 @@
 {% endif %}
 
 {% if name %}
-{% set nginx_name = user + '-' + name -%}
+{% set nginx_name = user + '-' + name %}
 {% else %}
-{% set nginx_name = user -%}
+{% set nginx_name = user %}
 {% endif %}
 
 {% if create_root %}
