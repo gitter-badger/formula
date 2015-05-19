@@ -33,7 +33,7 @@ include:
 #### Use the macro
 
 ```
-{{ nginxsite("example.com", "user", "group",
+{{ nginxsite("user", "group",
              template="salt://stackstrap/nginx/files/proxy-upstream.conf",
              cors="*",
              server_name="_",
