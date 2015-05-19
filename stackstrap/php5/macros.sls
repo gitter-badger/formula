@@ -4,9 +4,17 @@
 # Copyright 2014 Evan Borgstrom
 #
 
-{% macro php5_fpm_instance(name, port, user, group,
+{% macro php5_fpm_instance(user, group, port,
+                           name=False,
                            envs=False) -%}
-/etc/php5/fpm/pool.d/{{ name }}.conf:
+
+{% if name %}
+{% php_name = user + '-' + name -%}
+{% else %}
+{% php_name = user -%}
+{% endif %}
+
+/etc/php5/fpm/pool.d/{{ php_name }}.conf:
   file:
     - managed
     - owner: root
@@ -15,7 +23,7 @@
     - source: salt://stackstrap/php5/files/fpm-template.conf
     - template: jinja
     - defaults:
-        name: {{ name }}
+        php_name: {{ php_name }}
         port: {{ port }}
         user: {{ user }}
         group: {{ group }}

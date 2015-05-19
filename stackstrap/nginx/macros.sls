@@ -5,7 +5,7 @@
 #
 
 {% macro nginxsite(user, group,
-                   project_name=False,
+                   name=False,
                    project_path='/project',
                    auth=False,
                    cors=False,
@@ -27,7 +27,7 @@
 # the defaults
 {% if ssl_alias %}
 {{ nginxsite((user, group,
-          project_name=project_name,
+          name=name,
           auth=auth,
           cors=cors,
           project_path=project_path,
@@ -45,8 +45,8 @@
           custom=custom) }}
 {% endif %}
 
-{% if project_name %}
-{% nginx_name = user + '-' + project_name -%}
+{% if name %}
+{% nginx_name = user + '-' + name -%}
 {% else %}
 {% nginx_name = user -%}
 {% endif %}
