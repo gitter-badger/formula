@@ -9,9 +9,9 @@
                            envs=False) -%}
 
 {% if name %}
-{% php_name = user + '-' + name -%}
+{% set php_name = user + '-' + name -%}
 {% else %}
-{% php_name = user -%}
+{% set php_name = user -%}
 {% endif %}
 
 /etc/php5/fpm/pool.d/{{ php_name }}.conf:
