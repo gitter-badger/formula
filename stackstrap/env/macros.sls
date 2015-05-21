@@ -60,6 +60,7 @@
 
 {{ user }}_project_path:
   file.directory:
+    - name: {{ project_path }}
     - user: {{ name }}
     - group: {{ name }}
     - mode: 755
