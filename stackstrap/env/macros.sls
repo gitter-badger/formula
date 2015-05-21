@@ -58,7 +58,7 @@
 
 {% endif %}
 
-{{ project_path }}:
+{{ user }}_project_path:
   file.directory:
     - user: {{ name }}
     - group: {{ name }}
