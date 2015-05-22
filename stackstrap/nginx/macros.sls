@@ -15,7 +15,6 @@
                    server_name=None,
                    static=False,
                    root='public',
-                   create_root=False,
                    enabled=True,
                    enabled_name=None,
                    ssl=False,
@@ -37,7 +36,6 @@
           server_name=server_name,
           static=static,
           root=root,
-          create_root=False,
           enabled=enabled,
           enabled_name=enabled_name,
           ssl=True,
@@ -51,17 +49,6 @@
 {% set nginx_name = user -%}
 {% endif %}
 
-{% if create_root %}
-{{ project_path }}/{{ root }}:
-  file:
-    - directory
-    - user: {{ user }}
-    - group: {{ group or user }}
-    - mode: 755
-    - require:
-      - file: {{ project_path }}
-{% endif %}
-
 # if we're being run in a VirtualBox instance we turn sendfile off
 # this requires that the macros file be imported `with context`, but to avoid
 # having the high state run error out if it's not imported with context we 
@@ -73,8 +60,6 @@
 /etc/nginx/sites-available/{{ nginx_name }}.{{ listen }}.conf:
   file:
     - managed
-    - require:
-      - file: {{ project_path }}
     - user: root
     - group: root
     - mode: 444
