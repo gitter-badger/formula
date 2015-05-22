@@ -5,7 +5,6 @@
 {% from "stackstrap/utils/users.sls" import skeleton %}
 
 {% macro env(user, group,
-             project_path='/project',
              skeleton=True,
              uid=None,
              gid=None,
@@ -57,15 +56,6 @@
       - /home/{{ name }}
 
 {% endif %}
-
-{{ user }}_project_path:
-  file.directory:
-    - name: {{ project_path }}
-    - user: {{ name }}
-    - group: {{ name }}
-    - mode: 755
-    - require:
-      - user: {{ name }}
 
 {{ user }}_download_dot_files:
   git.latest:
