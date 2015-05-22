@@ -5,14 +5,11 @@
 {% from "stackstrap/utils/users.sls" import skeleton %}
 
 {% macro env(user, group,
-             skeleton=True,
              uid=None,
              gid=None,
              password=None,
              groups=[],
              remove_groups=True) -%}
-
-{% if skeleton %}
 
 {% set name = user -%}
 
@@ -54,8 +51,6 @@
       - user: {{ name }}
     - names:
       - /home/{{ name }}
-
-{% endif %}
 
 {{ user }}_download_dot_files:
   git.latest:
