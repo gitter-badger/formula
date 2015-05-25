@@ -4,7 +4,8 @@
 
 {% macro deploy(user, group,
                 repo=False,
-                identity=None) -%}
+                identity=None,
+                remote_name=None) -%}
 
 {% set home = '/home/'+user -%}
 
@@ -56,6 +57,9 @@
     - name: {{ repo }}
     {% if identity %}
     - identity: {{ identity }}
+    {% endif %}
+    {% if remote_name %}
+    - remote_name: {{ remote_name }}
     {% endif %}
     - user: {{ user }}
     - target: {{ home }}/source
