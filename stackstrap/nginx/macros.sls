@@ -5,6 +5,7 @@
 #
 
 {% macro nginxsite(user, group,
+                   default_server=False,
                    name=False,
                    project_path='/project',
                    auth=False,
@@ -27,6 +28,7 @@
 {% if ssl_alias %}
 {{ nginxsite(user, group,
           name=name,
+          default_server=default_server,
           auth=auth,
           cors=cors,
           project_path=project_path,
@@ -72,6 +74,7 @@
         project_path: '{{ project_path }}'
         auth: {{ auth }}
         cors: '{{ cors }}'
+        default_server: {{ default_server }}
         server_name: {{ server_name }}
         listen: "{{ listen }}"
         owner: {{ user }}
