@@ -72,7 +72,7 @@
         project_path: '{{ project_path }}'
         auth: {{ auth }}
         cors: '{{ cors }}'
-        server_name: "{{ server_name or 'localhost' }}"
+        server_name: {{ server_name }}
         listen: "{{ listen }}"
         owner: {{ user }}
         group: {{ group }}
