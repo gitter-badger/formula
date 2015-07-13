@@ -15,6 +15,7 @@
                    listen='80',
                    server_name=None,
                    static=False,
+                   static_proxy=False,
                    root='public',
                    enabled=True,
                    enabled_name=None,
@@ -37,6 +38,7 @@
           listen='443',
           server_name=server_name,
           static=static,
+          static_proxy=static_proxy,
           root=root,
           enabled=enabled,
           enabled_name=enabled_name,
@@ -80,6 +82,7 @@
         owner: {{ user }}
         group: {{ group }}
         root: {{ root }}
+        static_proxy: {{ static_proxy }}
         static: {{ static }}
         ssl: {{ ssl }}{% if custom %}
         custom: "sites-available/{{ nginx_name }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
