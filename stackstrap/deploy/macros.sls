@@ -4,6 +4,7 @@
 
 {% macro deploy(user, group,
                 repo=False,
+                rev=False,
                 identity=None,
                 remote_name=None) -%}
 
@@ -57,6 +58,9 @@
     - name: {{ repo }}
     {% if identity %}
     - identity: {{ identity }}
+    {% endif %}
+    {% if rev %}
+    - rev: {{ rev }}
     {% endif %}
     {% if remote_name %}
     - remote_name: {{ remote_name }}
