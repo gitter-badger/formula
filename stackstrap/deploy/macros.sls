@@ -6,6 +6,7 @@
                 repo=False,
                 rev=False,
                 identity=None,
+                bower=False,
                 remote_name=None) -%}
 
 {% set home = '/home/'+user -%}
@@ -51,6 +52,14 @@
     - owner: {{ user }}
     - group: {{ group }} 
     - mode: 755
+    
+{% if bower %}
+{{ home }}/shared/bower_components:
+  file.directory:
+    - owner: {{ user }}
+    - group: {{ group }} 
+    - mode: 755
+{% endif %}
 
 {% if repo %}
 {{ user }}_repo:
