@@ -40,12 +40,6 @@
     - group: {{ group }} 
     - mode: 755
 
-{{ home }}/shared/bower_components:
-  file.directory:
-    - owner: {{ user }}
-    - group: {{ group }} 
-    - mode: 755
-
 {{ home }}/releases:
   file.directory:
     - owner: {{ user }}
