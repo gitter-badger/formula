@@ -7,6 +7,7 @@
                 rev=False,
                 identity=None,
                 bower=False,
+                node=False,
                 remote_name=None) -%}
 
 {% set home = '/home/'+user -%}
@@ -55,6 +56,14 @@
     
 {% if bower %}
 {{ home }}/shared/bower_components:
+  file.directory:
+    - owner: {{ user }}
+    - group: {{ group }} 
+    - mode: 755
+{% endif %}
+
+{% if node %}
+{{ home }}/shared/node_modules:
   file.directory:
     - owner: {{ user }}
     - group: {{ group }} 
