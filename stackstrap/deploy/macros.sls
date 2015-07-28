@@ -5,6 +5,8 @@
 {% macro deploy(user, group,
                 repo=False,
                 rev=False,
+                git_name=False,
+                git_email=False,
                 identity=None,
                 bower=False,
                 node=False,
@@ -85,6 +87,28 @@
     {% endif %}
     - user: {{ user }}
     - target: {{ home }}/source
+{% endif %}
+
+{% if git_name %}
+{{ user }}_git_config_name:
+  git.config:
+    - name: user.name
+    - value: {{ git_name }}
+    - repo: {{ home }}/source
+    - user: {{ user }}
+    - require:
+      - git: {{ user }}_repo
+{% endif %}
+
+{% if git_email %}
+{{ user }}_git_config_email:
+  git.config:
+    - name: user.email
+    - value: {{ git_email }}
+    - repo: {{ home }}/source
+    - user: {{ user }}
+    - require:
+      - git: {{ user }}_repo
 {% endif %}
 
 {%- endmacro %}
