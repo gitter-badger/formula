@@ -6,6 +6,7 @@
 
 {% macro php5_fpm_instance(user, group, port,
                            name=False,
+                           clear_env=True,
                            envs=False) -%}
 
 {% if name %}
@@ -27,6 +28,7 @@
         port: {{ port }}
         user: {{ user }}
         group: {{ group }}
+        clear_env: {{ clear_env }}
         {% if envs %}
         envs:
           {% for env in envs %}
