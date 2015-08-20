@@ -32,7 +32,7 @@
         {% if envs %}
         envs:
           {% for env in envs %}
-          {{ env }}: {{ envs[env] }}
+          {{ env }}: "{{ envs[env] }}"
           {% endfor %}
         {% else %}
         envs: {}
