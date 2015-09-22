@@ -6,6 +6,7 @@
 
 {% macro mysql_user_db(name, password,
                        database=False,
+                       connection=False,
                        dump=False,
                        dump_format="textfile") -%}
 
@@ -15,12 +16,22 @@
   mysql_database:
     - present
     - name: {{ database_name }}
+    {% if connection %}
+    - connection_user: {{ connection['user'] }}
+    - connection_pass: {{ connection['pass'] }}
+    - connection_host: {{ connection['host'] }}
+    {% endif %}
 
   mysql_user:
     - present
     - name: {{ name }}
     - password: '{{ password }}'
     - host: 'localhost'
+    {% if connection %}
+    - connection_user: {{ connection['user'] }}
+    - connection_pass: {{ connection['pass'] }}
+    - connection_host: {{ connection['host'] }}
+    {% endif %}
 
   mysql_grants:
     - present
@@ -32,6 +43,11 @@
     - require:
       - mysql_user: {{ name }}
       - mysql_database: {{ database_name }}
+    {% if connection %}
+    - connection_user: {{ connection['user'] }}
+    - connection_pass: {{ connection['pass'] }}
+    - connection_host: {{ connection['host'] }}
+    {% endif %}
 
 {% if dump and dump != salt['grains.get']('stackstrap.mysql.dump', '') %}
 
