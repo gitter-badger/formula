@@ -5,6 +5,7 @@
 #
 
 {% macro mysql_user_db(name, password,
+                       host='localhost',
                        database=False,
                        connection=False,
                        dump=False,
@@ -26,7 +27,7 @@
     - present
     - name: {{ name }}
     - password: '{{ password }}'
-    - host: 'localhost'
+    - host: '{{ host }}'
     {% if connection %}
     - connection_user: {{ connection['user'] }}
     - connection_pass: {{ connection['pass'] }}
@@ -39,7 +40,7 @@
     - grant: all privileges
     - database: '{{ database_name }}.*'
     - user: {{ name }}
-    - host: 'localhost'
+    - host: '{{ host }}'
     - require:
       - mysql_user: {{ name }}
       - mysql_database: {{ database_name }}
