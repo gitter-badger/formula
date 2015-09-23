@@ -5,8 +5,8 @@
 #
 
 {% macro mysql_user_db(name, password,
-                       host='localhost',
                        database=False,
+                       host='localhost',
                        connection=False,
                        dump=False,
                        dump_format="textfile") -%}
