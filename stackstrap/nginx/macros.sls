@@ -75,7 +75,7 @@
         nginx_name: '{{ nginx_name }}'
         project_path: '{{ project_path }}'
         auth: {{ auth }}
-        cors: '{{ cors }}'
+        cors: {{ cors }}
         default_server: {{ default_server }}
         server_name: {{ server_name }}
         listen: "{{ listen }}"
