@@ -63,4 +63,6 @@ import_mysql_dump:
     - unless: [[ -z "$(mysql --user={{ name }} --password={{ password }} -e "use '{{ database_name }}'; show tables;")" ]] && { exit 1; }
 {% endif %}
 
+{%- endmacro %}
+
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
