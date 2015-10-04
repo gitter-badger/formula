@@ -50,12 +50,6 @@
     - connection_host: {{ connection['host'] }}
     {% endif %}
 
-{% if dump and dump != salt['grains.get']('stackstrap.mysql.dump', '') %}
-
-stackstrap.mysql.dump:
-  grains.present:
-    - value: {{ dump }}
-
 import_mysql_dump:
   cmd:
     - run
@@ -64,10 +58,6 @@ import_mysql_dump:
     {% else %}
     - name: cat {{ dump }} | mysql --user={{ name }} --password={{ password }} {{ database_name }}
     {% endif %}
-    - onlyif: test -f {{ dump }}
-
-{% endif %}
-
-{%- endmacro %}
+    - unless: [[ -z "$(mysql --user={{ name }} --password={{ password }} -e "use '{{ database_name }}'; show tables;")" ]] && { exit 1; }
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
