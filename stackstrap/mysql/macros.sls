@@ -59,6 +59,7 @@ import_mysql_dump:
     {% else %}
     - name: cat {{ dump }} | mysql --user={{ name }} --password={{ password }} {{ database_name }}
     {% endif %}
+    - onlyif: test -f {{ dump }}
     - unless: [[ -z "$(mysql --user={{ name }} --password={{ password }} -e "use '{{ database_name }}'; show tables;")" ]] && { exit 1; }
 {% endif %}
 
