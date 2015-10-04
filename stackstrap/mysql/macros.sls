@@ -50,6 +50,7 @@
     - connection_host: {{ connection['host'] }}
     {% endif %}
 
+{% if dump %}
 import_mysql_dump:
   cmd:
     - run
@@ -59,5 +60,6 @@ import_mysql_dump:
     - name: cat {{ dump }} | mysql --user={{ name }} --password={{ password }} {{ database_name }}
     {% endif %}
     - unless: [[ -z "$(mysql --user={{ name }} --password={{ password }} -e "use '{{ database_name }}'; show tables;")" ]] && { exit 1; }
+{% endif %}
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
