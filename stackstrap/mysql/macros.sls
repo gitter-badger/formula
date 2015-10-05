@@ -60,7 +60,7 @@ import_mysql_dump:
     - name: cat {{ dump }} | mysql --user={{ name }} --password={{ password }} {{ database_name }}
     {% endif %}
     - onlyif: test -f {{ dump }}
-    - unless: [[ -z "$(mysql --user={{ name }} --password={{ password }} -e "use '{{ database_name }}'; show tables;")" ]] && { exit 1; }
+    - unless: "[[ -z $(mysql --user={{ name }} --password={{ password }} -e 'use {{ database_name }}; show tables;') ]] && { exit 1; }"
     - require:
       - mysql_user: {{ name }}
       - mysql_database: {{ database_name }}
