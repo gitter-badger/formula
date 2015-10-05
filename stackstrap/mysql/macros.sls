@@ -64,6 +64,7 @@ import_mysql_dump:
     - require:
       - mysql_user: {{ name }}
       - mysql_database: {{ database_name }}
+      - mysql_grants: {{ name }}
 {% endif %}
 
 {%- endmacro %}
