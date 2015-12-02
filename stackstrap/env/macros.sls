@@ -98,18 +98,20 @@
     - user: {{ user }}
     - group: {{ group }}
 
-{{ home }}/.vim/bundle:
+{{ home }}/.vim/bundle/html5:
   file.directory:
     - makedirs: True
     - user: {{ user }}
     - group: {{ group }}
-
-{{ home }}/.vim/bundle/html5:
-  git.latest:
-    - name: https://github.com/othree/html5.vim.git
+  archive.extracted:
+    - source: https://github.com/othree/html5/archive/ad38231df6845562f569512fd250c5660aadeb64.tar.gz
+    - source_hash: md5=c191088400337360a2fab4c34d0fb6f7
+    - archive_format: tar
+    - tar_options: --strip-components 1
     - user: {{ user }}
-    - target: {{ home }}/.vim/bundle/html5
+    - group: {{ group }}
 
+{#
 {{ home }}/.vim/bundle/jedi-vim:
   git.latest:
     - name: https://github.com/davidhalter/jedi-vim.git
@@ -151,6 +153,7 @@
     - name: https://github.com/kien/ctrlp.vim.git
     - user: {{ user }}
     - target: {{ home }}/.vim/bundle/ctrlp.vim
+#}
 
 {%- endmacro %}
 
