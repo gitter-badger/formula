@@ -98,17 +98,14 @@
     - user: {{ user }}
     - group: {{ group }}
 
-{{ home }}/.vim/bundle/html5:
-  file.directory:
-    - makedirs: True
-    - user: {{ user }}
-    - group: {{ group }}
+
+{{ user }}_vim_plugin_html5:
   archive.extracted:
     - name: {{ home }}/.vim/bundle/html5
-    - source: https://github.com/othree/html5/archive/ad38231df6845562f569512fd250c5660aadeb64.tar.gz
-    - source_hash: md5=c191088400337360a2fab4c34d0fb6f7
-    - archive_format: tar
+    - source: https://github.com/othree/html5.vim/archive/ad38231df6845562f569512fd250c5660aadeb64.tar.gz
+    - source_hash: md5=c570bb345d6dea49164c843825052e5b
     - tar_options: --strip-components 1
+    - archive_format: tar
     - user: {{ user }}
     - group: {{ group }}
 
