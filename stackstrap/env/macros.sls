@@ -13,6 +13,8 @@
 
 {% set name = user -%}
 
+{% set home = '/home/' + user %}
+
 {{ name }}:
   group:
     - present
@@ -52,23 +54,104 @@
     - names:
       - /home/{{ name }}
 
-{{ user }}_download_dot_files:
-  git.latest:
-    - name: https://github.com/stackstrap/dot-files.git
+{{ home }}/.bashrc:
+  file.managed:
+    - source: salt://stackstrap/env/files/.bashrc
     - user: {{ user }}
-    - rev: master
-    - target: /home/{{ user }}/dot-files
-    - submodules: True
+    - group: {{ group }}
 
-{{ user }}_install_dot_files:
-  cmd.run:
-    - name: sh dot-files/install-dot-files.sh
+{{ home }}/.tmux.conf:
+  file.managed:
+    - source: salt://stackstrap/env/files/.tmux.conf
     - user: {{ user }}
-    - cwd: /home/{{ user }}
-    - require:
-      - git: {{ user }}_download_dot_files
+    - group: {{ group }}
+
+{{ home }}/.vimrc:
+  file.managed:
+    - source: salt://stackstrap/env/files/.vimrc
+    - user: {{ user }}
+    - group: {{ group }}
+
+{{ home }}/.ssh:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ group }}
+
+{{ home }}/.ssh/rc:
+  file.managed:
+    - source: salt://stackstrap/env/files/.ssh/rc
+    - user: {{ user }}
+    - group: {{ group }}
+
+#Vim plugins
+
+{{ home }}/.vim/autoload:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ group }}
+
+{{ home }}/.vim/autoload/pathogen.vim:
+  file.managed:
+    - source: salt://stackstrap/env/files/.vim/autoload/pathogen.vim
+    - user: {{ user }}
+    - group: {{ group }}
+
+{{ home }}/.vim/bundle:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ group }}
+
+{{ home }}/.vim/bundle/html5:
+  git.latest:
+    - name: https://github.com/othree/html5.vim.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/html5
+
+{{ home }}/.vim/bundle/jedi-vim:
+  git.latest:
+    - name: https://github.com/davidhalter/jedi-vim.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/jedi-vim
+
+{{ home }}/.vim/bundle/vim-colors-solarized:
+  git.latest:
+    - name: https://github.com/altercation/vim-colors-solarized.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/vim-colors-solarized
+
+{{ home }}/.vim/bundle/vim-javascript:
+  git.latest:
+    - name: https://github.com/pangloss/vim-javascript.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/vim-javascript
+
+{{ home }}/.vim/bundle/vim-python-pep8-indent:
+  git.latest:
+    - name: https://github.com/hynek/vim-python-pep8-indent.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/vim-python-pep8-indent
+
+{{ home }}/.vim/bundle/syntastic:
+  git.latest:
+    - name: https://github.com/scrooloose/syntastic.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/syntastic
+
+{{ home }}/.vim/bundle/todo.txt-vim:
+  git.latest:
+    - name: https://github.com/freitass/todo.txt-vim.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/todo.txt-vim
+
+{{ home }}/.vim/bundle/ctrlp.vim:
+  git.latest:
+    - name: https://github.com/kien/ctrlp.vim.git
+    - user: {{ user }}
+    - target: {{ home }}/.vim/bundle/ctrlp.vim
 
 {%- endmacro %}
-
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
