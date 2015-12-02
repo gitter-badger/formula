@@ -99,7 +99,7 @@
     - group: {{ group }}
 
 
-{{ user }}_vim_plugin_html5:
+{{ home }}/.vim/bundle/html5:
   archive.extracted:
     - name: {{ home }}/.vim/bundle/html5
     - source: https://github.com/othree/html5.vim/archive/ad38231df6845562f569512fd250c5660aadeb64.tar.gz
