@@ -1,0 +1,11 @@
+{% set env = salt['grains.filter_by']({
+    'Debian': {
+        'ack': 'ack-grep'
+    },
+    'RedHat': {
+        'ack': 'ack'
+    },
+    'Arch': {
+        'ack': 'ack'
+    }
+}, merge=salt['pillar.get']('env:lookup')) %}

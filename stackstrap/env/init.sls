@@ -2,13 +2,15 @@
 # Base environment
 #
 
+{% from "stackstrap/env/map.jinja" import env with context %}
+
 env-packages:
   pkg:
     - installed
     - names:
       - vim
       - tree
-      - ack-grep
+      - {{ env.ack }}
       - bc
 
 /usr/local/bin/ack:
