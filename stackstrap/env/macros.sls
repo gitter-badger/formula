@@ -101,7 +101,6 @@
 
 {{ home }}/.vim/bundle/html5:
   archive.extracted:
-    - name: {{ home }}/.vim/bundle/html5
     - source: https://github.com/othree/html5.vim/archive/ad38231df6845562f569512fd250c5660aadeb64.tar.gz
     - source_hash: md5=c570bb345d6dea49164c843825052e5b
     - tar_options: --strip-components 1
