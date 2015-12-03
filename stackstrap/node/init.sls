@@ -3,8 +3,8 @@
 
 /usr/local/node:
   archive.extracted:
-    - source: https://iojs.org/download/release/v3.3.1/iojs-v3.3.1-linux-x86.tar.gz
-    - source_hash: sha256=88e44af1eb6c020f3107c91c39b1b839ec3aa1a77affdf74225c8b8ceca7f6dc
+    - source: https://nodejs.org/dist/v4.2.2/node-v4.2.2-linux-x64.tar.gz
+    - source_hash: sha256=5c39fac55c945be3b8ac381a12bdbe3a64a9bdc5376d27e2ce0c72160eff5942
     - archive_format: tar
     - tar_options: --strip-components 1
 
