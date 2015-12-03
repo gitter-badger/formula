@@ -164,7 +164,7 @@
 
 {{ home }}/.vim/bundle/ctrlp.vim:
   archive.extracted:
-    - source: https://github.com/kien/ctrlp/archive/564176f01d7f3f7f8ab452ff4e1f5314de7b0981.tar.gz
+    - source: https://github.com/kien/ctrlp.vim/archive/564176f01d7f3f7f8ab452ff4e1f5314de7b0981.tar.gz
     - source_hash: md5=8eaa3be4335b929b8fd497ac812a10e6
     - tar_options: --strip-components 1
     - archive_format: tar
