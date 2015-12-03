@@ -11,7 +11,11 @@
 /usr/local/bin/node:
   file.symlink:
     - target: /usr/local/node/bin/node
+    - require:
+      - archive: /usr/local/node
 
 /usr/local/bin/npm:
   file.symlink:
     - target: /usr/local/node/lib/node_modules/npm/bin/npm-cli.js
+    - require:
+      - archive: /usr/local/node
