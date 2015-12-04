@@ -2,16 +2,15 @@
 
 {% macro docker(user) -%}
 
-add_user_to_docker_group:
-  user:
-    - name: {{ user }}
-    - groups:
-      - docker 
-    - require:
-      - pkg: docker
+docker_group_members:
+  group.present:
+    - name: docker
+    - members:
+      - {{ user }} 
 
-docker:
+run_docker:
   service.running:
+    - name: docker
     - enable: True
     - require:
       - pkg: docker
