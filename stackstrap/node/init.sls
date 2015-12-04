@@ -19,3 +19,7 @@
     - target: /usr/local/node/lib/node_modules/npm/bin/npm-cli.js
     - require:
       - archive: /usr/local/node
+
+set_npm_prefix:
+  cmd.run:
+    - name: npm config set prefix /usr/local
