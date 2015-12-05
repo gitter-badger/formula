@@ -12,6 +12,7 @@ env-packages:
       - tree
       - {{ env.ack }}
       - bc
+      - tmux
 
 /usr/local/bin/ack:
   file.symlink:
