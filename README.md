@@ -8,7 +8,7 @@ fileserver_backend:
   - roots
 
 gitfs_remotes:
-  - https://github.com/stackstrap/formula.git
+  - https://github.com/everysquare/formula.git
 
 file_roots:
   base:
@@ -21,20 +21,20 @@ file_roots:
 
 ```
 include:
-  - stackstrap.nginx
+  - formula.nginx
 ```
 
 #### Import the macro
 
 ```
-{% from "stackstrap/nginx/macros.sls" import nginxsite %}
+{% from "formula/nginx/macros.sls" import nginxsite %}
 ```
 
 #### Use the macro
 
 ```
 {{ nginxsite("user", "group",
-             template="salt://stackstrap/nginx/files/proxy-upstream.conf",
+             template="salt://formula/nginx/files/proxy-upstream.conf",
              cors="*",
              server_name="_",
              static="/vagrant/static"
@@ -44,6 +44,3 @@ include:
 }}
 ```
 
-### More examples
-
-To see a comprehensive collection of usage examples you can checkout the [kitchen sink](https://github.com/stackstrap/kitchen-sink).
