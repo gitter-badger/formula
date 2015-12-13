@@ -1,21 +1,4 @@
-# Standard minion config
-
-```
-file_client: local
-
-fileserver_backend:
-  - git
-  - roots
-
-gitfs_remotes:
-  - https://github.com/everysquare/formula.git
-
-file_roots:
-  base:
-    - /vagrant/salt/root
-```
-
-### Using Macros and States
+# Using Macros and States
 
 #### Include the state
 
