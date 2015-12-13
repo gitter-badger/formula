@@ -18,4 +18,19 @@ env-packages:
   file.symlink:
     - target: /usr/bin/ack-grep
 
+python_requirements:
+  pip.installed:
+    - pkgs:
+      - awscli
+      - bitbucket-api
+      - boto
+      - bunch
+      - fabric
+      - jedi
+      - legit
+      - pprintpp
+      - pyyaml
+      - requests
+      - ruamel.yaml
+
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
