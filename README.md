@@ -1,5 +1,7 @@
 # Using Macros and States
 
+[![Join the chat at https://gitter.im/everysquare/formula](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/everysquare/formula?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 #### Include the state
 
 ```
